@@ -5,6 +5,7 @@
 import os
 import random
 import re
+import settings
 
 lines = None
 words = None
@@ -20,7 +21,12 @@ def get_data(path):
 
 def get_words():
     if not words:
-        load_words()
+        if settings.word_list:
+            load_words(word_list, None)
+        elif settings.text_file:
+            load_words(None, settings.text_file)
+        else:
+            print "no word source specified in settings.py"
     return words
 
 
@@ -39,7 +45,7 @@ def get_censor_char():
 
 def set_censor_characters(censor_chars):
     """Sets the pool of censor characters. Input should be a single string
-    containing all the censor charcters you'd like to use.
+    containing all the censor characters you'd like to use.
     Example: "@#$%^"
 
     """
@@ -68,7 +74,7 @@ def censor(input_text):
     return ret
 
 
-def load_words(wordlist=None):
+def load_words(wordlist=None, text_file=None):
     """ Loads and caches the profanity word list. Input file (if provided)
     should be a flat text file with one profanity entry per line.
 
@@ -76,8 +82,14 @@ def load_words(wordlist=None):
     global words
     if not wordlist:
         # no wordlist was provided, load the wordlist from the local store
-        filename = get_data('wordlist.txt')
+        filename = get_data(settings.text_file)
         f = open(filename)
         wordlist = f.readlines()
         wordlist = [w.strip() for w in wordlist if w]
     words = wordlist
+
+def load_words_from_settings(wordlist=None):
+    """ Loads and caches the profanity word list. Input file (if provided)
+    should be a flat text file with one profanity entry per line.
+
+    """

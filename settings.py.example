@@ -1,0 +1,7 @@
+wordlist = [
+    'cats',
+    'dogs'
+]
+
+# If loading word list from text file, specify text file name here and save file to data directory
+text_file = 'wordlist.txt'
