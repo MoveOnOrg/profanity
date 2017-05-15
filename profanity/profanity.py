@@ -22,7 +22,7 @@ def get_data(path):
 def get_words():
     if not words:
         if settings.word_list:
-            load_words(word_list, None)
+            load_words(settings.word_list, None)
         elif settings.text_file:
             load_words(None, settings.text_file)
         else:
@@ -88,8 +88,14 @@ def load_words(wordlist=None, text_file=None):
         wordlist = [w.strip() for w in wordlist if w]
     words = wordlist
 
-def load_words_from_settings(wordlist=None):
-    """ Loads and caches the profanity word list. Input file (if provided)
-    should be a flat text file with one profanity entry per line.
-
+def contains_profanity_re(input_text):
+    """ Checks for profanity using regex string in settings. Returns a
+        list of tuples if profanity is present, an empty list otherwise.
     """
+    try:
+        blockwords = settings.blockwords_re
+    except AttributeError:
+        print "Set a value for blockwords_re in settings.py"
+        return None
+    else:
+        return re.findall(blockwords, input_text)
