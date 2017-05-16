@@ -6,13 +6,16 @@ A Python library to check for (and clean) profanity in strings.
 ![Q-Bert spitting some profanity][logo]
 [logo]: http://i.imgur.com/kmz4Qx7.png
 
-##Installation
+## Installation
     pip install profanity
+    cp settings.py.example profanity/settings.py
 
-
-##Usage
+## Usage
     from profanity import profanity
     profanity.contains_profanity("You smell like shit.")
+    Out: True
+
+    profanity.contains_profanity_re("You smell like shit.")
     Out: True
 
     profanity.censor("You smell like shit.")
@@ -28,7 +31,7 @@ A Python library to check for (and clean) profanity in strings.
 
 ## Features
 
-* Load your own wordlist, or use the bundled one.
+* Enter your own bad words list or regex in settings.py, or specify a flat text file word list.
 * Censors words using standard censor characters (!@#$%), or load your own censor characters. 
 * Uses a pool of censor characters to create a more natural censor string. 
 * Censors all instances of a given word with the same censor string - for easy correlation.
@@ -37,7 +40,6 @@ A Python library to check for (and clean) profanity in strings.
 ## #TODO
 
 * Support for whole words vs. partial words
-* Regex support
 
 
 ### I love Forks, Pull Requests, and Bugs!
