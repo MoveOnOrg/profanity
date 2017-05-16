@@ -89,8 +89,7 @@ def load_words(wordlist=None, text_file=None):
     words = wordlist
 
 def contains_profanity_re(input_text):
-    """ Checks for profanity using regex string in settings. Returns a
-        list of tuples if profanity is present, an empty list otherwise.
+    """ Checks for profanity using regex string and returns True
     """
     try:
         blockwords = settings.blockwords_re
@@ -98,4 +97,4 @@ def contains_profanity_re(input_text):
         print "Set a value for blockwords_re in settings.py"
         return None
     else:
-        return re.findall(blockwords, input_text)
+        return len(re.findall(blockwords, input_text)) > 0
