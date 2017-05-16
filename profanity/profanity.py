@@ -89,7 +89,8 @@ def load_words(wordlist=None, text_file=None):
     words = wordlist
 
 def contains_profanity_re(input_text):
-    """ Checks for profanity using regex string and returns True
+    """ Checks for profanity using regex string and returns True if profanity
+        is present, False otherwise.
     """
     try:
         blockwords = settings.blockwords_re
