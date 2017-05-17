@@ -12,21 +12,17 @@ words = None
 _censor_chars = '@#$%!'
 _censor_pool = []
 
-_ROOT = os.path.abspath(os.path.dirname(__file__))
-
-
-def get_data(path):
-    return os.path.join(_ROOT, 'data', path)
-
 
 def get_words():
     if not words:
-        if settings.word_list:
+        try:
             load_words(settings.word_list, None)
-        elif settings.text_file:
-            load_words(None, settings.text_file)
-        else:
-            print "no word source specified in settings.py"
+        except AttributeError:
+            try:
+                load_words(None, settings.text_file)
+            except AttributeError:
+                print "no word source specified in settings.py"
+                return None
     return words
 
 
@@ -80,13 +76,16 @@ def load_words(wordlist=None, text_file=None):
 
     """
     global words
-    if not wordlist:
+    if not wordlist and text_file:
         # no wordlist was provided, load the wordlist from the local store
-        filename = get_data(settings.text_file)
-        f = open(filename)
+        f = open(text_file)
         wordlist = f.readlines()
         wordlist = [w.strip() for w in wordlist if w]
+        if not wordlist:
+            print "Unsuccessful loading word list. Check that text file is a flat file with one word per line."
+            return None
     words = wordlist
+    return True
 
 def contains_profanity_re(input_text):
     """ Checks for profanity using regex string and returns True if profanity
@@ -98,4 +97,4 @@ def contains_profanity_re(input_text):
         print "Set a value for blockwords_re in settings.py"
         return None
     else:
-        return len(re.findall(blockwords, input_text)) > 0
+        return len(re.findall(blockwords, input_text, flags=re.IGNORECASE)) > 0
