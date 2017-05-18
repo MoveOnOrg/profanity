@@ -1,0 +1,16 @@
+import os
+
+# If using manually entered wordlist, enter here as a comma-separated string
+
+wordlist_text = os.environ.get('PROFANITY_WORD_LIST', 'gobcat,gobdog')
+word_list = wordlist_text.split(',')
+
+# If loading word list from text file, specify full path to file
+
+text_file = os.environ.get('PROFANITY_WORD_LIST_FILE_LOCATION', 'wordlist.txt')
+
+# If using regex blockwords via contains_profanity_re, input regex string here
+
+my_regex_string = """(?:piss(?:\\ take|\\-take|take|e(?:rs|[srd])|ing|y)?|quims?|shit(?:t(?:e(?:rs|[dr])|ing|y)|e(?:rs|[sdry])|ing|[se])?|t(?:urds?|wats?)|wank(?:e(?:rs|[rd])|ing|s)?|a(?:rs(?:e(?:\\ hole|\\-hole|hole|[sd])|ing|e)|ss(?:\\ holes?|\\-holes?|ed|holes?|ing))|b(?:ull(?:\\ sh\\it(?:t(?:e(?:rs|[dr])|ing)|s)?|\\-shit(?:t(?:e(?:rs|[dr])|ing)|s)?|shit(?:t(?:e(?:rs|[dr])|ing)|s)?)|low(?:\\ jobs?|\\-jobs?|jobs?))|c(?:ock(?:\\ suck(?:ers?|ing)|\\-suck(?:ers?|ing)|suck(?:ers?|ing))|rap(?:p(?:e(?:rs|[rd])|ing|y)|s)?|u(?:nts?|m(?:ing|ming|s)))|dick(?:\\ head|\\-head|ed|head|ing|less|s)|f(?:uck(?:ed|ing|s)?|art(?:e[rd]|ing|[sy])?|eltch(?:e(?:rs|[rsd])|ing)?)|ha(?:rd[\\-\\ ]?on|lf(?:\\ a[sr]|\\-a[sr]|a[sr])sed)|m(?:other(?:\\ fuck(?:ers?|ing\?)|\\-fuck(?:ers?|ing\?)|fuck(?:ers?|ing\?))|uth(?:a(?:\\ fuck(?:ers?|ing|[aaa])|\\-fuck(?:ers?|ing\?|[aaa])|fuck(?:ers?|ing|[aaa]))|er(?:\\ fuck(?:ers?|ing\?)|\\-fuck(?:ers?|ing\?)|fuck(?:ers?|ing\?)))|erde?))"""
+
+blockwords_re = os.environ.get('PROFANITY_REGEX', my_regex_string)
